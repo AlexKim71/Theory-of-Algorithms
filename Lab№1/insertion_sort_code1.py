@@ -1,39 +1,40 @@
-def insertion_sort(arr):
-    # Вихідні дані: масив arr [0, ..., n-1] елементів, що впорядковуються у зростаючому порядку
-    # Початковий масив: arr = [79, 43, 31, 5, 66, 62, 34, 76]
+def selection_sort(arr):
     n = len(arr)
+    # Ініціалізація лічильників
     comparisons = 0
     assignments = 0
-    # Цикл ітерується від другого елемента до кінця
-    # i - це індекс елемента, який потрібно вставити
-    for i in range(1, n):
-        # Зберігаємо поточний елемент для вставки
-        key = arr[i]
-        assignments += 1
-        # j - індекс попереднього елемента
-        j = i - 1
-        assignments += 1
-        # Пересуваємо елементи, що більші за key,
-        # вправо, щоб звільнити місце для вставки
-        while j >= 0 and arr[j] > key:
-            comparisons += 1  # Порівняння в умові while
-            arr[j + 1] = arr[j]
-            assignments += 1
-            j -= 1
-            assignments += 1
-        # Додаткове порівняння, коли умова while стає false
-        # (якщо j не стало менше 0)
-        if j >= 0:
-            comparisons += 1
-        # Вставляємо key на його правильне місце
-        arr[j + 1] = key
-        assignments += 1
+
+    # # Зовнішній цикл ітерується по всьому списку
+    # # від 0 до n-2 проходів
+    for i in range(n - 1):
+        
+        # # Припускаємо, що поточний елемент є мінімальним
+        min_index = i
+        assignments += 1  # Присвоєння змінній min_index
+        
+        # # Внутрішній цикл шукає найменший елемент в решті списку
+        for j in range(i + 1, n):
+            comparisons += 1  # Операція порівняння arr[j] < arr[min_index]
+            if arr[j] < arr[min_index]:
+                min_index = j
+                assignments += 1  # Присвоєння змінній min_index
+
+        # # Обмін елементів, якщо знайдено новий мінімальний
+        comparisons += 1  # Операція порівняння min_index != i (хоча в чистому коді може бути неявним, тут рахуємо для логіки)
+        if min_index != i:
+            # # Обмін елементів
+            arr[i], arr[min_index] = arr[min_index], arr[i]
+            assignments += 3  # Три присвоєння при обміні (темп, arr[i], arr[min_index])
+
     return arr, comparisons, assignments
 
-# Приклад використання
-my_list = [79, 43, 31, 5, 66, 62, 34, 76]
-sorted_list, comps, assigs = insertion_sort(my_list.copy())
-print("Оригінальний список:", my_list)
-print("Відсортований список:", sorted_list)
-print("Кількість порівнянь:", comps)
-print("Кількість присвоєнь:", assigs)
+my_list = [58, 5, 50, 99, 61, 32, 27, 45, 75]
+
+# Виконання сортування та отримання лічильників
+# Використання .copy(), щоб не змінювати оригінал
+sorted_list, comps, assigs = selection_sort(my_list.copy()) 
+
+print(f"Оригінальний список: {my_list}")
+print(f"Відсортований список: {sorted_list}")
+print(f"Кількість порівнянь: {comps}")
+print(f"Кількість присвоєнь: {assigs}")
